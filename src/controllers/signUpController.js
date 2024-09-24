@@ -15,9 +15,9 @@ exports.createUserPost = async (req, res) => {
       return res.status(400).send({ errors: errors.array() });
     }
 
-    const { first_name, last_name, email, password, isMember } = req.body;
+    const { first_name, last_name, email, password } = req.body;
     const hashedPass = await bcrypt.hash(password, 10);
-    await db.insertUser(first_name, last_name, email, hashedPass, isMember);
+    await db.insertUser(first_name, last_name, email, hashedPass);
     console.log(req.body);
     res.redirect("/login");
   } catch (error) {
