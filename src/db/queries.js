@@ -1,9 +1,9 @@
 const pool = require("./pool");
 
-async function insertUser(firstName, lastName, email, password, isMember) {
+async function insertUser(firstName, lastName, email, password) {
   await pool.query(
-    `INSERT INTO users (first_name, last_name, email, password, isMember) VALUES ($1, $2, $3, $4, $5)`,
-    [firstName, lastName, email, password, isMember]
+    `INSERT INTO users (first_name, last_name, email, password) VALUES ($1, $2, $3, $4)`,
+    [firstName, lastName, email, password]
   );
 }
 
@@ -22,10 +22,13 @@ async function getUserByEmail(email) {
   ]);
   return user.rows[0];
 }
-getUserByEmail("daxantz@hotmail.com");
+async function updateUserMemberStatus(id) {
+  await pool.query("UPDATE users SET isMember = true WHERE id = $1 ", [id]);
+}
 module.exports = {
   insertUser,
   getUsers,
   getUserById,
   getUserByEmail,
+  updateUserMemberStatus,
 };
