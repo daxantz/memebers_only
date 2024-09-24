@@ -11,6 +11,7 @@ const methodOverride = require("method-override");
 const signUpRouter = require("./src/routes/sign-up.js");
 const loginRouter = require("./src/routes/login.js");
 const indexRouter = require("./src/routes/index.js");
+const joinRouter = require("./src/routes/join.js");
 const passport = require("passport");
 const flash = require("express-flash");
 
@@ -35,6 +36,7 @@ app.use(passport.session());
 app.use(signUpRouter);
 app.use(loginRouter);
 app.use(indexRouter);
+app.use(joinRouter);
 
 app.listen(3000, (req, res) => {
   console.log("Server running on port 3000");
