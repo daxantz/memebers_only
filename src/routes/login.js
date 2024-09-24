@@ -3,6 +3,8 @@ const loginController = require("../controllers/loginController");
 const validateUser = require("../validators/signUpValidator");
 const loginRouter = Router();
 const passport = require("passport");
+const checkNotAuthenticated =
+  require("../validators/authFunctions").checkNotAuthenticated;
 
 loginRouter.get("/login", checkNotAuthenticated, loginController.loginFormGet);
 loginRouter.post(
@@ -24,12 +26,5 @@ loginRouter.delete("/logout", (req, res) => {
     res.redirect("/login");
   });
 });
-
-function checkNotAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return res.redirect("/");
-  }
-  next();
-}
 
 module.exports = loginRouter;
