@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS users  (
   last_name VARCHAR (255) NOT NULL,
   email VARCHAR (255) NOT NULL,
   password VARCHAR (255) NOT NULL, 
-  isMember boolean NOT NULL
+  isMember boolean 
 );
 
 CREATE TABLE IF NOT EXISTS messages (
@@ -27,8 +27,8 @@ CREATE TABLE IF NOT EXISTS messages (
 
 
 INSERT INTO users (first_name, last_name, email, password, isMember)
-VALUES ('alice', 'baker', 'alicebaker@gmail.com', '1234', true),
-        ('Devin', 'piece', 'dpiece@yahoo.com', 'sick', false);
+VALUES ('alice', 'baker', 'alicebaker@gmail.com', '1234'),
+        ('Devin', 'piece', 'dpiece@yahoo.com', 'sick');
 
 
 INSERT INTO messages (title, timestamp, text, user_id)
