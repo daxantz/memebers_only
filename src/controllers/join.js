@@ -5,7 +5,10 @@ const code = "amazon"; //secret code to become member
 exports.joinFormGet = async (req, res) => {
   const { id } = req.user;
   const user = await db.getUserById(Number(id));
-  res.render("join", { user: user });
+  res.render("join", {
+    user: user,
+    message: null,
+  });
 };
 
 exports.setMemberStatusPut = async (req, res) => {
@@ -20,7 +23,11 @@ exports.setMemberStatusPut = async (req, res) => {
     if (code === passcode) {
       await db.updateUserMemberStatus(Number(id));
       console.log(`user with the id: ${id} is now a member`);
-      return res.redirect("/");
+      return res.render("join", {
+        user: req.user,
+        message:
+          "Congratulations you're now a member and can see all message details",
+      });
     } else {
       return res.render("join", {
         user: req.user,
