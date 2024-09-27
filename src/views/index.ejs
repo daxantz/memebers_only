@@ -3,5 +3,17 @@
 <form action="/logout?_method=DELETE" method="POST">
   <button>Logout</button>
 </form>
+<!--to do: conditionally render messages for members and the messages for the non members-->
+<% messages.forEach(message => { %>
+<div>
+  <h2><%= message.title %></h2>
+  <p><%= message.text %></p>
+  <p>
+    <% if (!user.ismember) { %> Become a member to see who wrote this <% } else
+    { %> <%= message.email %>, <%= message.timestamp %> <% } %>
+  </p>
+</div>
+<% }) %>
 
-<a href="/join/<%= id %>">Become a member here</a>
+<a href="/join/">Become a member here</a>
+<a href="/create-message">Create a message</a>
