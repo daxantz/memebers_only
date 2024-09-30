@@ -26,6 +26,10 @@ async function updateUserMemberStatus(id) {
   await pool.query("UPDATE users SET isMember = true WHERE id = $1 ", [id]);
 }
 
+async function updateUserAdminStatus(id) {
+  await pool.query("UPDATE users SET isAdmin = true WHERE id = $1 ", [id]);
+}
+
 async function insertMessage(title, text, timestamp, id) {
   await pool.query(
     "INSERT INTO messages (title,text, timestamp,  user_id ) VALUES ($1, $2, $3, $4)",
@@ -35,10 +39,15 @@ async function insertMessage(title, text, timestamp, id) {
 
 async function getMemberMessages() {
   const messages = await pool.query(
-    "Select title, timestamp, text, email, isMember from messages inner join users on messages.user_id = users.id where users.isMember = true"
+    "Select title, timestamp, text, email, isMember,isAdmin, messages.id from messages inner join users on messages.user_id = users.id where users.isMember = true"
   );
   console.log(messages.rows);
   return messages.rows;
+}
+
+async function deleteMessage(id) {
+  await pool.query("DELETE FROM messages where id = $1", [id]);
+  console.log("DELETE SUCCESS");
 }
 
 module.exports = {
@@ -49,4 +58,6 @@ module.exports = {
   updateUserMemberStatus,
   insertMessage,
   getMemberMessages,
+  updateUserAdminStatus,
+  deleteMessage,
 };
