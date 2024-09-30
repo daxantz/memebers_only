@@ -1,19 +1,61 @@
-<h1>Welcome <%= name %></h1>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .inactive {
+        display: none;
+      }
+    </style>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!--  -->
+    <%- include('navbar') %>
+    <main class="container">
+      <h1 class="text-center">Welcome <%= name %></h1>
 
-<form action="/logout?_method=DELETE" method="POST">
-  <button>Logout</button>
-</form>
-<!--to do: conditionally render messages for members and the messages for the non members-->
-<% messages.forEach(message => { %>
-<div>
-  <h2><%= message.title %></h2>
-  <p><%= message.text %></p>
-  <p>
-    <% if (!user.ismember) { %> Become a member to see who wrote this <% } else
-    { %> <%= message.email %>, <%= message.timestamp %> <% } %>
-  </p>
-</div>
-<% }) %>
+      <!-- <form action="/logout?_method=DELETE" method="POST">
+    <button>Logout</button>
+  </form> -->
+      <!--to do: conditionally render messages for members and the messages for the non members-->
+      <div class="message-container container">
+        <div class="row">
+          <% messages.forEach(message => { %>
+          <div
+            class="message-item border border-dark-subtle mb-5 p-3 col-12 col-md-6 col-lg-4"
+          >
+            <h2><%= message.title %></h2>
+            <p><%= message.text %></p>
+            <p>
+              <% if (!user.ismember) { %> Become a member to see who wrote this
+              <% } else { %> <%= message.email %>, <%= message.timestamp %> <% }
+              %>
+            </p>
+            <form action="/delete/<%=message.id%>?_method=DELETE" method="POST">
+              <% if(user.isadmin) { %>
 
-<a href="/join/">Become a member here</a>
+              <button class="btn btn-danger">Delete</button>
+
+              <%} %>
+            </form>
+          </div>
+          <% }) %>
+        </div>
+      </div>
+
+      <!-- <a href="/join/">Become a member here</a>
 <a href="/create-message">Create a message</a>
+<a href="/admin">Become an admin</a> -->
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>
