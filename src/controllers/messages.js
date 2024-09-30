@@ -16,3 +16,14 @@ exports.createMessagePut = async (req, res) => {
     console.log(error);
   }
 };
+
+exports.deleteMessage = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log(id);
+    await db.deleteMessage(Number(id));
+    res.redirect("/");
+  } catch (error) {
+    console.log(error);
+  }
+};
